@@ -29,6 +29,22 @@
 </head>
 
 <body>
+<?php
+    session_start();
+?>
+
+
+<!-- include -->
+<?php include 'login.php';
+
+?>
+<?php include 'register.php';
+
+?>
+
+
+
+
     <div class="header scrolling" id="myHeader">
         <div class="grid wide">
             <div class="header__top">
@@ -49,175 +65,75 @@
                     </div>
                 </div>
                 <div class="header__account">
-                    <a href="#my-Login" class="header__account-login">Đăng Nhập</a>
-                    <a href="#my-Register" class="header__account-register">Đăng Kí</a>
+                <?php
+                        // if(!empty($_GET['act'])) {
+                        //     echo '<a href="" class="header__account-login">'.$_GET['act'].'</a>';
+                        //     echo '<a href="logOut.php" class="header__account-register">Đăng xuất</a>';
+                        //     }
+                        // else {
+                        //     echo '<a href="#my-Login" class="header__account-login">Đăng Nhập</a>';
+                        //     echo '<a href="#my-Register" class="header__account-register">Đăng Kí</a>';
+                        //     }
+
+
+                        if(!empty($_SESSION['userName'])) {
+                            echo '<a href="userAccount" class="header__account-login">'.$_SESSION['userName'].'</a>';
+                            echo '<a href="logOut.php" class="header__account-register">Đăng xuất</a>';
+                            }
+                        else {
+                            echo '<a href="#my-Login" class="header__account-login">Đăng Nhập</a>';
+                            echo '<a href="#my-Register" class="header__account-register">Đăng Kí</a>';
+                            }
+                        
+                    ?>
                 </div>
-                <!-- Cart -->
-                <div class="header__cart have" href="#">
-                    <i class="fas fa-shopping-basket"></i>
-                    <div class="header__cart-amount">
-                        3
-                    </div>
-                    <div class="header__cart-wrap">
-                        <ul class="order__list">
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/aoCaro.jpg" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo sơ mi caro </a>
-                                        <div class="order-main-price"> 45,000 ₫</div>
-                                    </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/slide2.png" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo sơ mi  caro</a>
-                                        <div class="order-main-price"> 476,000 ₫</div>
-                                    </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/slide23.png" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo phông xanh </a>
-                                        <div class="order-main-price">210,000 ₫</div>
-                                    </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="total-money">Tổng cộng: 135.000đ</div>
-                        <a href="cart.php" class="btn btn--default cart-btn">Xem giỏ hàng</a>
-                        <a href="pay.php" class="btn btn--default cart-btn orange">Thanh toán</a>
-                        <!-- norcart -->
-                        <!-- <img class="header__cart-img-nocart" src="http://www.giaybinhduong.com/images/empty-cart.png" alt=""> -->
-                    </div>
-                </div>
+                 <!-- Cart -->
+                 <?php include 'cartMini.php'; ?>  
             </div>
         </div>
         <!-- Menu -->
-        <div class="header__nav">
-            <ul class="header__nav-list">
-                <li class="header__nav-item nav__search">
-                    <div class="nav__search-wrap">
-                        <input class="nav__search-input" type="text" name="" id="" placeholder="Tìm sản phẩm...">
-                    </div>
-                    <div class="nav__search-btn">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </li>
-                <li class="header__nav-item authen-form">
-                    <a href="#" class="header__nav-link">Tài Khoản</a>
-                    <ul class="sub-nav">
-                        <li class="sub-nav__item">
-                            <a href="#my-Login" class="sub-nav__link">Đăng Nhập</a>
-                        </li>
-                        <li class="sub-nav__item">
-                            <a href="#my-Register" class="sub-nav__link">Đăng Kí</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="header__nav-item index">
+        <?php
+include 'connect.php'; // Bao gồm tệp connect.php để kết nối cơ sở dữ liệu
+
+$sql = "SELECT * FROM DMSP"; // Truy vấn cơ sở dữ liệu để lấy danh sách sản phẩm
+$result = $conn->query($sql);
+?>
+
+<div class="header__nav">
+    <ul class="header__nav-list">
+        <!-- Các phần tử khác ở đây -->
+        
+        <li class="header__nav-item">
                     <a href="index.php" class="header__nav-link">Trang chủ</a>
                 </li>
-                <li class="header__nav-item">
-                    <a href="#" class="header__nav-link">Giới Thiệu</a>
-                </li>
-                <li class="header__nav-item">
-                    <a href="#" class="header__nav-link">Sản Phẩm</a>
-                    <div class="sub-nav-wrap grid wide">
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                    </div>
+
+        <li class="header__nav-item">
+            <a href="#" class="header__nav-link">Sản Phẩm</a>
+            <div class="sub-nav-wrap wide dm">
+                <?php
+                $count = 0; // Biến đếm số lượng sản phẩm đã in
+                while ($row = $result->fetch_assoc()) {
+                    // In ra tối đa 5 sản phẩm mỗi lần
+                    if ($count % 3== 0) {
+                        echo '<ul class="sub-nav">';
+                    }
+                    echo '<li class="sub-nav__item">';
+                    echo '<a href="listProduct.php" class="sub-nav__link">' . $row['TenDMSP'] . '</a>';
+                    echo '</li>';
+
+                    $count++;
+
+                    // Đóng thẻ ul nếu đã in đủ 5 sản phẩm hoặc hết sản phẩm
+                    if ($count % 3 == 0 || $count == $result->num_rows) {
+                        echo '</ul>';
+                    }
+                }
+                ?>
+            </div>
+        </li>
+
+             <li class="header__nav-item">
+                    <a href="cart.php" class="header__nav-link">Giỏ hàng</a>
                 </li>
                 <li class="header__nav-item">
                     <a href="news.php" class="header__nav-link">Tin Tức</a>
@@ -225,22 +141,26 @@
                 <li class="header__nav-item">
                     <a href="contact.php" class="header__nav-link">Liên Hệ</a>
                 </li>
-            </ul>
-        </div>
+    </ul>
+</div>
+
     </div>
 
+   
     <?php
-        $ErrorMessages = array();
-        $oldValues = array();
+include 'connect.php';
+session_start();
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$ErrorMessages = array();
+$oldValues = array();
 
-    
+// Kiểm tra xem biểu mẫu đã được gửi chưa
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Kiểm tra họ tên
-    if (empty($_POST["account"])) {
-        $ErrorMessages["account"] = "Vui lòng nhập họ tên";
+    if (empty($_POST["userName"])) {
+        $ErrorMessages["userName"] = "Vui lòng nhập họ tên";
     } else {
-        $oldValues["account"] = $_POST["account"];
+        $oldValues["userName"] = $_POST["userName"];
     }
 
     // Kiểm tra địa chỉ
@@ -248,13 +168,6 @@
         $ErrorMessages["address"] = "Vui lòng nhập địa chỉ";
     } else {
         $oldValues["address"] = $_POST["address"];
-    }
-
-    // Kiểm tra tỉnh/thành phố
-    if (empty($_POST["city"])) {
-        $ErrorMessages["city"] = "Vui lòng nhập tỉnh/thành phố";
-    } else {
-        $oldValues["city"] = $_POST["city"];
     }
 
     // Kiểm tra email
@@ -281,22 +194,52 @@
         }
     }
 
-
+    // Lưu ghi chú cho đơn hàng (không cần kiểm tra)
     $oldValues["note"] = isset($_POST["note"]) ? $_POST["note"] : "";
-    
+
     // Kiểm tra xem có lỗi không
-    if(empty($ErrorMessages)) {
-        
-        // Nếu không có lỗi, kiểm tra nút Đặt hàng đã được nhấn hay chưa
-            // Chuyển hướng về trang index.php
-            header("Location: index.php");
-            // Kết thúc kịch bản PHP sau khi chuyển hướng
-        
+    if (empty($ErrorMessages)) {
+        // Nếu không có lỗi, thực hiện câu lệnh INSERT
+        $userName = $_POST['userName'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        $note = $_POST['note'];
+
+        // Chuẩn bị câu lệnh SQL với các placeholder để tránh SQL injection
+        $sql = "INSERT INTO DonHang (TenK, email, sdt, address, note) VALUES (?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+
+        // Ràng buộc các tham số vào câu lệnh
+        mysqli_stmt_bind_param($stmt, "sssss", $userName, $email, $phone, $address, $note);
+
+        // Thực thi câu lệnh
+        $result = mysqli_stmt_execute($stmt);
+
+        // Kiểm tra xem việc thực thi có thành công không
+        if ($result) {
+            echo "<script>alert('Đặt hàng thành công!')</script>";
+            echo "<script>window.location.href='cart.php'</script>";
+        } else {
+            echo '<script>alert("Đặt hàng thất bại! ' . mysqli_error($conn) . '")</script>';
+        }
+
+        // Đóng câu lệnh
+        mysqli_stmt_close($stmt);
     }
 }
+
+// Truy vấn thông tin người dùng từ cơ sở dữ liệu
+$sql = "SELECT * FROM accounts WHERE userName = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "s", $_SESSION['userName']);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+// Kiểm tra xem có dòng nào được tìm thấy không
+if (mysqli_num_rows($result) == 1) {
+    $row = mysqli_fetch_assoc($result);
 ?>
-
-
 
 
 <div class="main">
@@ -304,56 +247,52 @@
         <div class="row">
             <div class="col l-7 m-12 s-12">
                 <!-- form -->
-                <form action="pay.php" method="post" name="form-order" >
+                
                     <div class="pay-information">
-                        <div class="pay__heading">Thông tin thanh toán</div>
+                    <div class="pay__heading">Thông tin thanh toán</div>
+                        <form action="pay.php" method="post" name="form-order" >
                         <div class="form-group">
                             <label for="account" class="form-label">Họ Tên *</label>
                             <p>.</p>
-                            <div class="error"><?php echo isset($ErrorMessages["account"]) ? $ErrorMessages["account"] : ""; ?></div>
-                            <input id="account" name="account" type="text" class="form-control" value="<?php echo isset($oldValues["account"]) ? htmlspecialchars($oldValues["account"]) : ""; ?>">
+                            <div class="error"><?php echo isset($ErrorMessages["userName"]) ? $ErrorMessages["userName"] : ""; ?></div>
+                            <input id="userName" name="userName" type="text" class="form-control" value="<?php echo isset($oldValues["userName"]) ? htmlspecialchars($oldValues["userName"]) : htmlspecialchars($row['userName']); ?>">
                             <p>.</p>
                         </div>
                         <div class="form-group">
                             <label for="address" class="form-label">Địa chỉ *</label>
                             <p>.</p>
                             <div class="error"><?php echo isset($ErrorMessages["address"]) ? $ErrorMessages["address"] : ""; ?></div>
-                            <input id="address" name="address" type="text" class="form-control" value="<?php echo isset($oldValues["address"]) ? htmlspecialchars($oldValues["address"]) : ""; ?>">
+                            <input id="address" name="address" type="text" class="form-control" value="<?php echo isset($oldValues["address"]) ? htmlspecialchars($oldValues["address"]) : htmlspecialchars($row['address']); ?>">
                             <p>.</p>
                         </div>
-                        <div class="form-group">
-                            <label for="city" class="form-label">Tỉnh / Thành phố *</label>
-                            <p>.</p>
-                            <div class="error"><?php echo isset($ErrorMessages["city"]) ? $ErrorMessages["city"] : ""; ?></div>
-                            <input id="city" name="city" type="text" class="form-control" value="<?php echo isset($oldValues["city"]) ? htmlspecialchars($oldValues["city"]) : ""; ?>">
-                            <p>.</p>
-                        </div>
+    
                         <div class="form-group">
                             <label  for="email" class="form-label">Email *</label>
                             <p>.</p>
                             <div class="error"><?php echo isset($ErrorMessages["email"]) ? $ErrorMessages["email"] : ""; ?></div>
-                            <input id="email" name="email" type="text" class="form-control" value="<?php echo isset($oldValues["email"]) ? htmlspecialchars($oldValues["email"]) : ""; ?>">
+                            <input id="email" name="email" type="text" class="form-control" value="<?php echo isset($oldValues["email"]) ? htmlspecialchars($oldValues["email"]) : htmlspecialchars($row['email']); ?>">
                             <p>.</p>
                         </div>
                         <div class="form-group">
                             <label for="phone" class="form-label">Số điện thoại *</label>
                             <p>.</p>
                             <div class="error"><?php echo isset($ErrorMessages["phone"]) ? $ErrorMessages["phone"] : ""; ?></div>
-                            <input id="phone" name="phone" type="text" class="form-control" value="<?php echo isset($oldValues["phone"]) ? htmlspecialchars($oldValues["phone"]) : ""; ?>">
+                            <input id="phone" name="phone" type="text" class="form-control" value="<?php echo isset($oldValues["phone"]) ? htmlspecialchars($oldValues["phone"]) : htmlspecialchars($row['phone']); ?>">
                             <p>.</p>
                         </div>
                         <div class="form-group">
                             <label for="note" class="form-label">Ghi chú cho đơn hàng</label>
                             <textarea class="form-control" name="note" id="note" cols="30" rows="5"><?php echo isset($oldValues["note"]) ? htmlspecialchars($oldValues["note"]) : ""; ?></textarea>
-                          
 
                         </div>
-                    </div>
-                    <div class="form-group">
+                        <div class="form-group">
                         <p>.</p>
                         <button type="submit" class="btn btn--default" name ="submit-order">Đặt hàng</button>
+                        </div>
+                    </form>
                     </div>
-                </form>
+                    
+             <?php }?>   
 
         <!-- form -->
 
@@ -363,7 +302,7 @@
                         <div class="pay__heading">Đơn hàng của bạn</div>
                         <div class="pay-info">
                             <div class="main__pay-text">
-                               Aó sơ mi kẻ dọc</div>
+                               Áo sơ mi kẻ dọc</div>
                                <div class="main__pay-amount">
                                 1
                             </div>
@@ -392,7 +331,7 @@
                             </div>
                         </div>
                         <div class="pay-info">
-                            <div class="main__pay-text special">
+                            <div class="main__pay-text">
                                 Giao hàng
                             </div>
                             <div class="main__pay-text">
@@ -403,7 +342,7 @@
                         <div class="pay-info">
                             <div class="main__pay-text special">
                                 Tổng thành tiền</div>
-                            <div class="main__pay-price">
+                            <div class="main__pay-price payY">
                                 1,120,000 ₫
                             </div>
                         </div>
@@ -477,16 +416,16 @@
                             </a>
                         </li>
                         <li class="footer__item">
-                            <div class="social-group">
-                                <a href="#" class="social-item"><i class="fab fa-facebook-f"></i>
+                        <div class="social-group">
+                                <a href="https://www.facebook.com/profile.php?id=100040227180867&locale=vi_VN" class="social-item"><i class="fab fa-facebook-f"></i>
                                     </a>
-                                <a href="#" class="social-item"><i class="fab fa-twitter"></i>
+                                <a href="https://twitter.com/LuongisDev" class="social-item"><i class="fab fa-twitter"></i>
                                     </a>
-                                <a href="#" class="social-item"><i class="fab fa-pinterest-p"></i>
+                                <a href="https://www.pinterest.com/21lngn/" class="social-item"><i class="fab fa-pinterest-p"></i>
                                     </a>
-                                <a href="#" class="social-item"><i class="fab fa-invision"></i>
+                                <a href="https://nam899186.invisionapp.com/teams/account?next=/homepage" class="social-item"><i class="fab fa-invision"></i>
                                     </a>
-                                <a href="#" class="social-item"><i class="fab fa-youtube"></i>  
+                                <a href="https://www.youtube.com/channel/UCUxxrm7ghBkuXLMLwBZXwcQ" class="social-item"><i class="fab fa-youtube"></i>  
                                     </a>
                             </div>
                         </li>
@@ -514,62 +453,97 @@
             <span class="footer__text"> &copy Bản quyền thuộc về <a class="footer__link" href="#"> Nguyễn Kế Lương</a></span>
         </div>
     </div>
+    
     <!-- Modal Form -->
-    <div class="ModalForm">
-        <div class="modal" id="my-Register">
-            <a href="#" class="overlay-close"></a>
-            <div class="authen-modal register">
-                <h3 class="authen-modal__title">Đăng Kí</h3>
+   
+
+
+<div class="ModalForm">
+    <div class="modal" id="my-Register">
+        <a href="#" class="overlay-close"></a>
+        <div class="authen-modal register">
+            <h3 class="authen-modal__title">Đăng Kí</h3>
+
+            <form action="pay.php#my-Register" method="post" name="register-form">
                 <div class="form-group">
-                    <label for="account" class="form-label">Họ Tên</label>
-                    <input id="account" name="account" type="text" class="form-control">
-                    <span class="form-message">Không hợp lệ !</span>
+                    <label for="register-account" class="form-label">Họ Tên</label>
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["form-userName"]) ? $ErrorMessages["form-userName"] : "" ?></div>
+                    <input id="register-account" name="form-userName" type="text" class="form-control" value="<?php echo isset($oldValues['form-userName']) ? htmlspecialchars($oldValues['form-userName']) : ''; ?>">
+                    <p>.</p>
                 </div>
                 <div class="form-group">
-                    <label for="password" class="form-label">Tài khoản Email *</label>
-                    <input id="password" name="password" type="text" class="form-control">
-                
+                    <label for="register-email" class="form-label">Tài khoản Email *</label>
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["form-email"]) ? $ErrorMessages["form-email"] : "" ?></div>
+                    <input id="register-email" name="form-email" type="text" class="form-control" value="<?php echo isset($oldValues['form-email']) ? htmlspecialchars($oldValues['form-email']) : ''; ?>">
+                    <div>.</div>
+                    
                 </div>
                 <div class="form-group">
-                    <label for="password" class="form-label">Mật khẩu *</label>
-                    <input id="password" name="password" type="text" class="form-control">
-                
+                    <label for="register-password" class="form-label">Mật khẩu *</label>
+
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["form-password"]) ? $ErrorMessages["form-password"] : "" ?></div>
+                    <input id="register-password" name="form-password" type="password" class="form-control" value="<?php echo isset($oldValues['form-password']) ? htmlspecialchars($oldValues['form-password']) : ''; ?>">
+                    <p>.</p>
+
                 </div>
                 <div class="form-group">
-                    <label for="password" class="form-label">Nhập lại mật khẩu *</label>
-                    <input id="password" name="password" type="text" class="form-control">
-                
+                    <label for="confirm-password" class="form-label">Nhập lại mật khẩu *</label>
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["confirm-password"]) ? $ErrorMessages["confirm-password"] : "" ?></div>
+                    <input id="confirm-password" name="confirm-password" type="password" class="form-control" value="<?php echo isset($oldValues['confirm-password']) ? htmlspecialchars($oldValues['confirm-password']) : ''; ?>">
+                    <p>.</p>
+
                 </div>
+
                 <div class="authen__btns">
-                    <div class="btn btn--default">Đăng Kí</div>
+                    <button type="submit" class="btn btn--default" name="register-form">Đăng Ký</button>
                 </div>
-            </div>
+            </form>
         </div>
-        <div class=" modal" id="my-Login">
-            <a href="#" class="overlay-close"></a>
-            <div class="authen-modal login">
-                <h3 class="authen-modal__title">Đăng Nhập</h3>
-                <div class="form-group">
-                    <label for="account" class="form-label">Địa chỉ email *</label>
-                    <input id="account" name="account" type="text" class="form-control">
-                    <span class="form-message">Tài khoản không chính xác !</span>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="form-label">Mật khẩu *</label>
-                    <input id="password" name="password" type="text" class="form-control">
-                
-                </div>
-                <div class="authen__btns">
-                    <div class="btn btn--default">Đăng Nhập</div>
-                    <input type="checkbox" class="authen-checkbox">
-                    <label class="form-label">Ghi nhớ mật khẩu</label>
-                </div>
+    </div>
+</div>
+
+<div class="modal" id="my-Login">
+    <a href="#" class="overlay-close"></a>
+    <form action="pay.php#my-Login" method="post" name ="login-form">
+        <div class="authen-modal login">
+            <h3 class="authen-modal__title">Đăng Nhập</h3>
+            <div class="form-group">
+                <label for="login-account" class="form-label">Địa chỉ email*</label>
+                <p>.</p>
+                <div class="error"><?php echo isset($ErrorMessagesLogin["form-email-login"]) ? $ErrorMessagesLogin["form-email-login"] : "" ?></div>
+                <input id="login-account" name="form-email-login" type="text" class="form-control" value="<?php echo isset($oldValuesLogin['form-email-login']) ? htmlspecialchars($oldValuesLogin['form-email-login']) : ''; ?>">
+                <a>.</a>
+            </div>
+
+            <div class="form-group">
+                <label for="login-password" class="form-label">Mật khẩu *</label>
+                <p>.</p>
+                <div class="error"><?php echo isset($ErrorMessagesLogin["passwordlogin"]) ? $ErrorMessagesLogin["passwordlogin"] : "" ?></div>
+                <input id="login-password" name="passwordlogin" type="password" class="form-control">
+                <p>.</p>
+            </div>
+
+            <div class="authen__btns">
+                <button type="submit" class="btn btn--default" name ="login-form">Đăng Nhập</button>
+                <input type="checkbox" class="authen-checkbox">
+                <label class="form-label">Ghi nhớ mật khẩu</label>
+
+            <!-- </div>
+            
                 <a class="authen__link">Quên mật khẩu ?</a>
-            </div>
-        </div>
+
+        </div> -->
+    </form>
+</div>
+
+<!-- 
         <div class="up-top" id="upTop" onclick="goToTop()">
             <i class="fas fa-chevron-up"></i>
-        </div>
+        </div> -->
 
     </div>
     <!-- Sccipt for owl caroucel -->

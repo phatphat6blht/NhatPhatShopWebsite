@@ -32,6 +32,22 @@
 </head>
 
 <body>
+
+<?php
+    session_start();
+?>
+
+
+<!-- include -->
+<?php include 'login.php';
+
+?>
+<?php include 'register.php';
+
+?>
+
+
+
     <div class="header scrolling" id="myHeader">
         <div class="grid wide">
             <div class="header__top">
@@ -52,175 +68,75 @@
                     </div>
                 </div>
                 <div class="header__account">
-                    <a href="#my-Login" class="header__account-login">Đăng Nhập</a>
-                    <a href="#my-Register" class="header__account-register">Đăng Kí</a>
+                <?php
+                        // if(!empty($_GET['act'])) {
+                        //     echo '<a href="" class="header__account-login">'.$_GET['act'].'</a>';
+                        //     echo '<a href="logOut.php" class="header__account-register">Đăng xuất</a>';
+                        //     }
+                        // else {
+                        //     echo '<a href="#my-Login" class="header__account-login">Đăng Nhập</a>';
+                        //     echo '<a href="#my-Register" class="header__account-register">Đăng Kí</a>';
+                        //     }
+
+
+                        if(!empty($_SESSION['userName'])) {
+                            echo '<a href="userAccount" class="header__account-login">'.$_SESSION['userName'].'</a>';
+                            echo '<a href="logOut.php" class="header__account-register">Đăng xuất</a>';
+                            }
+                        else {
+                            echo '<a href="#my-Login" class="header__account-login">Đăng Nhập</a>';
+                            echo '<a href="#my-Register" class="header__account-register">Đăng Kí</a>';
+                            }
+                        
+                    ?>
                 </div>
                 <!-- Cart -->
-                <div class="header__cart have" href="#">
-                    <i class="fas fa-shopping-basket"></i>
-                    <div class="header__cart-amount">
-                        3
-                    </div>
-                    <div class="header__cart-wrap">
-                        <ul class="order__list">
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/Slide1.JPG" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo sơ mi caro </a>
-                                        <div class="order-main-price"> 45,000 ₫</div>
-                                    </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/Slide2.JPG" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo khoác đen</a>
-                                        <div class="order-main-price"> 476,000 ₫</div>
-                                    </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/Slide23.JPG" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo phông xanh </a>
-                                        <div class="order-main-price">210,000 ₫</div>
-                                    </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="total-money">Tổng cộng: 135.000đ</div>
-                        <a href="cart.php" class="btn btn--default cart-btn">Xem giỏ hàng</a>
-                        <a href="pay.php" class="btn btn--default cart-btn orange">Thanh toán</a>
-                        <!-- norcart -->
-                        <!-- <img class="header__cart-img-nocart" src="http://www.giaybinhduong.com/images/empty-cart.JPG" alt=""> -->
-                    </div>
-                </div>
+                <?php include 'cartMini.php'; ?>  
             </div>
         </div>
         <!-- Menu -->
-        <div class="header__nav">
-            <ul class="header__nav-list">
-                <li class="header__nav-item nav__search">
-                    <div class="nav__search-wrap">
-                        <input class="nav__search-input" type="text" name="" id="" placeholder="Tìm sản phẩm...">
-                    </div>
-                    <div class="nav__search-btn">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </li>
-                <li class="header__nav-item authen-form">
-                    <a href="#" class="header__nav-link">Tài Khoản</a>
-                    <ul class="sub-nav">
-                        <li class="sub-nav__item">
-                            <a href="#my-Login" class="sub-nav__link">Đăng Nhập</a>
-                        </li>
-                        <li class="sub-nav__item">
-                            <a href="#my-Register" class="sub-nav__link">Đăng Kí</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="header__nav-item index">
+        <?php
+include 'connect.php'; // Bao gồm tệp connect.php để kết nối cơ sở dữ liệu
+
+$sql = "SELECT * FROM DMSP"; // Truy vấn cơ sở dữ liệu để lấy danh sách sản phẩm
+$result = $conn->query($sql);
+?>
+
+<div class="header__nav">
+    <ul class="header__nav-list">
+        <!-- Các phần tử khác ở đây -->
+        
+        <li class="header__nav-item">
                     <a href="index.php" class="header__nav-link">Trang chủ</a>
                 </li>
-                <li class="header__nav-item">
-                    <a href="#" class="header__nav-link">Giới Thiệu</a>
-                </li>
-                <li class="header__nav-item">
-                    <a href="#" class="header__nav-link">Sản Phẩm</a>
-                    <div class="sub-nav-wrap grid wide">
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                    </div>
+
+        <li class="header__nav-item">
+            <a href="#" class="header__nav-link">Sản Phẩm</a>
+            <div class="sub-nav-wrap wide dm">
+                <?php
+                $count = 0; // Biến đếm số lượng sản phẩm đã in
+                while ($row = $result->fetch_assoc()) {
+                    // In ra tối đa 5 sản phẩm mỗi lần
+                    if ($count % 3== 0) {
+                        echo '<ul class="sub-nav">';
+                    }
+                    echo '<li class="sub-nav__item">';
+                    echo '<a href="listProduct.php" class="sub-nav__link">' . $row['TenDMSP'] . '</a>';
+                    echo '</li>';
+
+                    $count++;
+
+                    // Đóng thẻ ul nếu đã in đủ 5 sản phẩm hoặc hết sản phẩm
+                    if ($count % 3 == 0 || $count == $result->num_rows) {
+                        echo '</ul>';
+                    }
+                }
+                ?>
+            </div>
+        </li>
+
+             <li class="header__nav-item">
+                    <a href="cart.php" class="header__nav-link">Giỏ hàng</a>
                 </li>
                 <li class="header__nav-item">
                     <a href="news.php" class="header__nav-link">Tin Tức</a>
@@ -228,51 +144,41 @@
                 <li class="header__nav-item">
                     <a href="contact.php" class="header__nav-link">Liên Hệ</a>
                 </li>
-            </ul>
-        </div>
+    </ul>
+</div>
+
     </div>
 
 
+<!-- Start -->
 
 
-    <div class="main">
+ <div class="main">
         <div class="grid wide">
+
+            <!--  -->
+                <?php 
+            if (!empty($_GET['id'])){
+
+                $product_id=$_GET['id'];
+
+                // Truy vấn để lấy thông tin chi tiết của sản phẩm dựa trên ID
+                $sql = "SELECT * FROM sanpham WHERE MaSP = '$product_id'";
+                $result=$conn->query($sql);
+
+                    // Kiểm tra và hiển thị thông tin chi tiết của sản phẩm
+                    if ($result->num_rows>0) {
+                        $row = $result->fetch_assoc();
+                ?>                       
+            
+
+            <!--  -->
             <div class="productInfo">
                 <div class="row">
                     <div class="col l-5 m-12 s-12">
                         <div class="owl-carousel owl-theme" id="sync1">
                             <a href="#" class="product">
-                                <div class="product__avt" style="background-image: url(assets/img/product/Slide1.JPG)">
-                                </div>
-                            </a>
-                            <a href="#" class="product">
-                                <div class="product__avt" style="background-image: url(assets/img/product/Slide2.JPG)">
-                                </div>
-                            </a>
-                            <a href="#" class="product">
-                                <div class="product__avt" style="background-image: url(assets/img/product/Slide3.JPG)">
-                                </div>
-                            </a>
-                            <a href="#" class="product">
-                                <div class="product__avt" style="background-image: url(assets/img/product/Slide4.JPG)">
-                                </div>
-                            </a>
-                        </div>
-                        <div class="owl-carousel owl-theme" id="sync2">
-                            <a href="#" class="product">
-                                <div class="product__avt" style="background-image: url(assets/img/product/Slide5.JPG)">
-                                </div>
-                            </a>
-                            <a href="#" class="product">
-                                <div class="product__avt" style="background-image: url(assets/img/product/Slide6.JPG)">
-                                </div>
-                            </a>
-                            <a href="#" class="product">
-                                <div class="product__avt" style="background-image: url(assets/img/product/Slide7.JPG)">
-                                </div>
-                            </a>
-                            <a href="#" class="product">
-                                <div class="product__avt" style="background-image: url(assets/img/product/Slide8.JPG)">
+                            <div class="product__avt" style="background-image: url('<?php echo $row['HinhAnh']; ?>')">
                                 </div>
                             </a>
                         </div>
@@ -319,22 +225,22 @@
                             <div class="policy bg-2 ">
                                 <img src="./assets/img/policy/policy2.png " class="productIndfo__policy-img "></img>
                                 <div class="productIndfo__policy-info ">
-                                    <h3 class="productIndfo__policy-title ">Giao hàng miễn phí</h3>
-                                    <p class="productIndfo__policy-description ">Cho đơn hàng từ 300K</p>
+                                    <h3 class="productIndfo__policy-title ">Đổi trả hàng</h3>
+                                    <p class="productIndfo__policy-description ">trong ba ngày đầu tiên</p>
                                 </div>
                             </div>
                             <div class="policy bg-1 ">
                                 <img src="./assets/img/policy/policy3.png " class="productIndfo__policy-img "></img>
                                 <div class="productIndfo__policy-info ">
-                                    <h3 class="productIndfo__policy-title ">Giao hàng miễn phí</h3>
-                                    <p class="productIndfo__policy-description ">Cho đơn hàng từ 300K</p>
+                                    <h3 class="productIndfo__policy-title ">Hàng chính hãng</h3>
+                                    <p class="productIndfo__policy-description "> cam kết chất lượng</p>
                                 </div>
                             </div>
                             <div class="policy bg-2 ">
                                 <img src="./assets/img/policy/policy4.png " class="productIndfo__policy-img "></img>
                                 <div class="productIndfo__policy-info ">
-                                    <h3 class="productIndfo__policy-title ">Giao hàng miễn phí</h3>
-                                    <p class="productIndfo__policy-description ">Cho đơn hàng từ 300K</p>
+                                    <h3 class="productIndfo__policy-title ">Tư vấn 24/24</h3>
+                                    <p class="productIndfo__policy-description ">Giải đáp mọi thắc mắc</p>
                                 </div>
                             </div>
                         </div>
@@ -342,7 +248,7 @@
                             <p class="productIndfo__category-text"> Danh mục : <a href="# " class="productIndfo__category-link ">Thời trang nam</a></p>
                             <p class="productIndfo__category-text"> Hãng : <a href="# " class="productIndfo__category-link ">Nhất Phát Shop</a></p>
                             <p class="productIndfo__category-text"> Số lượng đã bán : 322</p>
-                            <p class="productIndfo__category-text"> Số lượng trong kho :472</p>
+                            <p class="productIndfo__category-text"> Số lượng trong kho : <?php echo $row['SoLuong']?></p>
 
                         </div>
                     </div>
@@ -365,20 +271,28 @@
                         <div class="tab-content ">
                             <div class="tab-pane active ">
                                 <div class="productDes ">
-                                    <div class="productDes__title ">ÁO KHOÁC LÔNG CỪU LÀ GÌ</div>
-                                    <p class="productDes__text "> <a href="# " class="productDes__link ">ÁO KHOÁC LÔNG CỪU LÀ GÌ </a> Thông tin mô tả ÁO KHOÁC LÔNG CỪU
-                                        Áo khoác lông da cừu  là sản phẩm cao cấp mới nhất đến từ bộ sưu tập Ask Me Anything (AMA 2022) của thương hiệu Davinet. Phiên bản đặc biệt dành cho mùa Đông 2022 sử dụng lót lông cừu cao cấp cùng viền cổ lông sói Bắc Âu nổi bật giúp giữ ấm tuyệt đối đi cùng chất liệu da cừu Tarmi nhập khẩu mềm mại. Ngôn ngữ thiết kế cổ điển, phá cách bằng những đường Parabol giúp tôn dáng, tăng sự quyến rũ cho phái mạnh mang tính biểu tượng của Davinet vẫn được khai thác tối đa với dòng sản phẩm áo khoác Cừu.
+                                    <div class="productDes__title "><?php echo $row['TenSP']?> là gì ?</div>
+                                    <p class="productDes__text "> <a href="# " class="productDes__link "><?php echo $row['TenSP']?></a> <br>
+
+                                       <?php echo $row['MoTa']?>
                                     </p>
-                                    <div class="productDes__title ">ÁO KHOÁC LÔNG CỪU LÀ GÌ</div>
-                                    <p class="productDes__text "> <a href="# " class="productDes__link ">ÁO KHOÁC LÔNG CỪU LÀ GÌ </a> Thông tin mô tả ÁO KHOÁC LÔNG CỪU
-                                        Áo khoác lông da cừu  là sản phẩm cao cấp mới nhất đến từ bộ sưu tập Ask Me Anything (AMA 2022) của thương hiệu Davinet. Phiên bản đặc biệt dành cho mùa Đông 2022 sử dụng lót lông cừu cao cấp cùng viền cổ lông sói Bắc Âu nổi bật giúp giữ ấm tuyệt đối đi cùng chất liệu da cừu Tarmi nhập khẩu mềm mại. Ngôn ngữ thiết kế cổ điển, phá cách bằng những đường Parabol giúp tôn dáng, tăng sự quyến rũ cho phái mạnh mang tính biểu tượng của Davinet vẫn được khai thác tối đa với dòng sản phẩm áo khoác Cừu.
-                                    </p>
+                                
                                 </div>
                             </div>
+
+                            <?php 
+                                } else {
+                                    echo "Không tìm thấy sản phẩm";
+                                }
+                            } else {
+                                echo "Không có thông tin sản phẩm được cung cấp";
+                            }
+                            ?>
                             <div class="tab-pane ">
                                 <div class="productDes__ratting ">
                                     <div class="productDes__ratting-title ">Đánh giá của bạn</div>
                                     <div class="productDes__ratting-wrap">
+                                    <form method="post" action="">
                                         <div id="rating">
                                             <input type="radio" id="star5" name="rating" value="5" />
                                             <label class="full" for="star5" title="Awesome - 5 stars"></label>
@@ -410,52 +324,69 @@
                                             <input type="radio" id="starhalf" name="rating" value="half" />
                                             <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
                                         </div>
-                                        <textarea class="ratecomment" name=" " id=" " cols="30 " rows="1" placeholder="Vui lòng viết đánh giá của bạn "></textarea>
+                                        <textarea class="ratecomment" id="comments" cols="30" rows="1" placeholder="Vui lòng viết đánh giá của bạn" name="comments"></textarea>
                                     </div>
-                                    <input type="submit " class="btn btn--default" value="Đánh giá">
+                                    <input type="submit" class="btn btn--default" name="submit_comment" value="Gửi">
+                                    </form>
                                 </div>
-                                <ul class="rate__list">
-                                    <li class="rate__item">
-                                        <div class="rate__info">
-                                            <img src="https://lh3.googleusercontent.com/ogw/ADGmqu9PFgn_rHIm9i3eIlVr5RwzwY2w8EystHF213wj=s32-c-mo" alt="">
-                                            <h3 class="rate__user">Nguyễn Kế Lương</h3>
-                                            <div class="rate__star">
-                                                <div class="group-star">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star-half-alt"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="rate__comment">Sản phẩm chất lượng rất tốt thật tuyệt vời</div>
-                                    </li>
-                                    <li class="rate__item">
-                                        <div class="rate__info">
-                                            <img src="https://lh3.googleusercontent.com/ogw/ADGmqu9PFgn_rHIm9i3eIlVr5RwzwY2w8EystHF213wj=s32-c-mo" alt="">
-                                            <h3 class="rate__user">Triệu Huy Mạnh</h3>
-                                            <div class="rate__star">
-
-                                            </div>
-                                        </div>
-                                        <div class="rate__comment">Sản phẩm chất lượng rất tốt 10d</div>
-                                    </li>
-                                    <li class="rate__item">
-                                        <div class="rate__info">
-                                            <img src="https://lh3.googleusercontent.com/ogw/ADGmqu9PFgn_rHIm9i3eIlVr5RwzwY2w8EystHF213wj=s32-c-mo" alt="">
-                                            <h3 class="rate__user">Nguyễn Thế Phát</h3>
-                                            <div class="rate__star">
-
-                                            </div>
-                                        </div>
-                                        <div class="rate__comment">Giao Hàng ngon đấy</div>
-                                    </li>
-                                </ul>
                             </div>
+                            <!-- Hiển thị danh sách bình luận -->
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+
+<?php 
+// Kiểm tra xem người dùng đã đăng nhập hay chưa
+if(isset($_SESSION['userName'])) {
+    // Người dùng đã đăng nhập, lấy thông tin từ session hoặc cookie
+    $userName = $_SESSION['userName'];
+
+    // Kết nối đến cơ sở dữ liệu
+    include 'connect.php'; // Thay đổi tên tệp kết nối tùy thuộc vào cách bạn cấu hình
+
+    // Truy vấn để lấy thông tin MaK từ bảng accounts dựa trên userName
+    $sql_get_user_info = "SELECT id FROM accounts WHERE userName = '$userName'";
+    $result_user_info = $conn->query($sql_get_user_info);
+
+    // Kiểm tra và lấy MaK nếu truy vấn thành công
+    if ($result_user_info->num_rows > 0) {
+        $row_user_info = $result_user_info->fetch_assoc();
+        $MaK = $row_user_info['id'];
+    } else {
+        echo "Không tìm thấy thông tin người dùng";
+        // Thực hiện xử lý thích hợp nếu không tìm thấy thông tin người dùng
+    }
+}
+
+// Xử lý gửi bình luận
+if (isset($_POST['submit_comment'])) {
+    // Kiểm tra xem biểu mẫu đã được gửi chưa
+    $comment = isset($_POST['comments']) ? $_POST['comments'] : '';
+    $rating = isset($_POST['rating']) ? $_POST['rating'] : '';
+
+    // Kiểm tra xem các biến cần thiết đã được khởi tạo hay chưa
+    if (!empty($comment) && !empty($rating) && !empty($MaK) && !empty($userName)) {
+        // Thực hiện truy vấn để lưu bình luận và đánh giá vào cơ sở dữ liệu
+        $sql_insert_comment = "INSERT INTO DanhGia (MaSP,MaK, userName, comments, rating) VALUES ('$product_id','$MaK', '$userName', '$comment', '$rating')";
+        if ($conn->query($sql_insert_comment) === TRUE) {
+            // Bình luận và đánh giá đã được lưu thành công, có thể thực hiện các hành động khác ở đây nếu cần
+            echo "<script>alert('Bình luận và đánh giá của bạn đã được gửi thành công!');</script>";
+        } else {
+            echo "Lỗi: " . $sql_insert_comment . "<br>" . $conn->error;
+        }
+    } else {
+        echo "<script>alert('Vui lòng điền đầy đủ thông tin bao gồm cả đánh giá Sao và bình luận.');</script>";
+    }
+}
+
+?>
+
+
+
             <div class="main__frame ">
                 <div class="grid wide ">
                     <h3 class="category__title ">Nhất Phát Men's fashion</h3>
@@ -465,7 +396,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide5.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__old ">340.000 <span class="price__unit ">đ</span></div>
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
@@ -480,7 +411,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide6.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__old ">340.000 <span class="price__unit ">đ</span></div>
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
@@ -495,7 +426,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide7.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__old ">340.000 <span class="price__unit ">đ</span></div>
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
@@ -510,7 +441,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide8.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
                                 </div>
@@ -524,7 +455,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide9.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__old ">340.000 <span class="price__unit ">đ</span></div>
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
@@ -539,7 +470,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide10.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__old ">340.000 <span class="price__unit ">đ</span></div>
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
@@ -554,7 +485,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide11.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__old ">340.000 <span class="price__unit ">đ</span></div>
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
@@ -569,7 +500,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide12.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__old ">340.000 <span class="price__unit ">đ</span></div>
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
@@ -584,7 +515,7 @@
                             <div class="product__avt " style="background-image: url(assets/img/product/Slide13.JPG) ">
                             </div>
                             <div class="product__info ">
-                                <h3 class="product__name ">Framed-Sleeve Tops Group</h3>
+                                <h3 class="product__name ">áo thời trang</h3>
                                 <div class="product__price ">
                                     <div class="price__old ">340.000 <span class="price__unit ">đ</span></div>
                                     <div class="price__new ">320.000 <span class="price__unit ">đ</span></div>
@@ -690,16 +621,16 @@
                             </a>
                         </li>
                         <li class="footer__item">
-                            <div class="social-group">
-                                <a href="#" class="social-item"><i class="fab fa-facebook-f"></i>
+                        <div class="social-group">
+                                <a href="https://www.facebook.com/profile.php?id=100040227180867&locale=vi_VN" class="social-item"><i class="fab fa-facebook-f"></i>
                                     </a>
-                                <a href="#" class="social-item"><i class="fab fa-twitter"></i>
+                                <a href="https://twitter.com/LuongisDev" class="social-item"><i class="fab fa-twitter"></i>
                                     </a>
-                                <a href="#" class="social-item"><i class="fab fa-pinterest-p"></i>
+                                <a href="https://www.pinterest.com/21lngn/" class="social-item"><i class="fab fa-pinterest-p"></i>
                                     </a>
-                                <a href="#" class="social-item"><i class="fab fa-invision"></i>
+                                <a href="https://nam899186.invisionapp.com/teams/account?next=/homepage" class="social-item"><i class="fab fa-invision"></i>
                                     </a>
-                                <a href="#" class="social-item"><i class="fab fa-youtube"></i>  
+                                <a href="https://www.youtube.com/channel/UCUxxrm7ghBkuXLMLwBZXwcQ" class="social-item"><i class="fab fa-youtube"></i>  
                                     </a>
                             </div>
                         </li>
@@ -728,130 +659,91 @@
         </div>
     </div>
     <!-- Modal Form -->
-    <div class="ModalForm ">
-        <div class="modal " id="my-Register ">
-            <a href="# " class="overlay-close "></a>
-            <div class="authen-modal register ">
-                <h3 class="authen-modal__title ">Đăng Kí</h3>
-                <div class="form-group ">
-                    <label for="account " class="form-label ">Họ Tên</label>
-                    <input id="account " name="account " type="text " class="form-control ">
-                    <span class="form-message ">Không hợp lệ !</span>
-                </div>
-                <div class="form-group ">
-                    <label for="password " class="form-label ">Tài khoản Email *</label>
-                    <input id="password " name="password " type="text " class="form-control ">
-                    <span class="form-message "></span>
-                </div>
-                <div class="form-group ">
-                    <label for="password " class="form-label ">Mật khẩu *</label>
-                    <input id="password " name="password " type="text " class="form-control ">
-                    <span class="form-message "></span>
-                </div>
-                <div class="form-group ">
-                    <label for="password " class="form-label ">Nhập lại mật khẩu *</label>
-                    <input id="password " name="password " type="text " class="form-control ">
-                    <span class="form-message "></span>
-                </div>
-                <div class="authen__btns ">
-                    <div class="btn btn--default ">Đăng Kí</div>
-                </div>
-            </div>
-        </div>
-        <div class=" modal " id="my-Login ">
-            <a href="# " class="overlay-close "></a>
-            <div class="authen-modal login ">
-                <h3 class="authen-modal__title ">Đăng Nhập</h3>
-                <div class="form-group ">
-                    <label for="account " class="form-label ">Địa chỉ email *</label>
-                    <input id="account " name="account " type="text " class="form-control ">
-                    <span class="form-message ">Tài khoản không chính xác !</span>
-                </div>
-                <div class="form-group ">
-                    <label for="password " class="form-label ">Mật khẩu *</label>
-                    <input id="password " name="password " type="text" class="form-control ">
-                    <span class="form-message "></span>
-                </div>
-                <div class="authen__btns ">
-                    <div class="btn btn--default ">Đăng Nhập</div>
-                    <input type="checkbox " class="authen-checkbox ">
-                    <label class="form-label ">Ghi nhớ mật khẩu</label>
-                </div>
-                <a class="authen__link ">Quên mật khẩu ?</a>
-            </div>
-        </div>
-        <div class="up-top " id="upTop " onclick="goToTop() ">
-            <i class="fas fa-chevron-up "></i>
-        </div>
 
-    </div>
-    <!-- Messenger Plugin chat Code -->
-    <div id="fb-root"></div>
+   
 
-    <!-- Your Plugin chat code -->
-    <div id="fb-customer-chat" class="fb-customerchat">
-    </div>
-    <!-- Modal Form -->
-    <div class="ModalForm">
-        <div class="modal" id="my-Register">
-            <a href="#" class="overlay-close"></a>
-            <div class="authen-modal register">
-                <h3 class="authen-modal__title">Đăng Kí</h3>
+<div class="ModalForm">
+    <div class="modal" id="my-Register">
+        <a href="#" class="overlay-close"></a>
+        <div class="authen-modal register">
+            <h3 class="authen-modal__title">Đăng Kí</h3>
+
+            <form action="product.php#my-Register" method="post" name="register-form">
                 <div class="form-group">
-                    <label for="account" class="form-label">Họ Tên</label>
-                    <input id="account" name="account" type="text" class="form-control">
-                    <!-- <span class="form-message">Không hợp lệ !</span> -->
+                    <label for="register-account" class="form-label">Họ Tên</label>
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["form-userName"]) ? $ErrorMessages["form-userName"] : "" ?></div>
+                    <input id="register-account" name="form-userName" type="text" class="form-control" value="<?php echo isset($oldValues['form-userName']) ? htmlspecialchars($oldValues['form-userName']) : ''; ?>">
                     <p>.</p>
                 </div>
                 <div class="form-group">
-                    <label for="account" class="form-label">Tài khoản Email *</label>
-                    <input id="account" name="account" type="text" class="form-control">
-                    <span class="form-message"></span>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="form-label">Mật khẩu *</label>
-                    <input id="password" name="password" type="password" class="form-control">
-                    <!-- <span class="form-message"></span> -->
+                    <label for="register-email" class="form-label">Tài khoản Email *</label>
                     <p>.</p>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="form-label">Nhập lại mật khẩu *</label>
-                    <input id="password" name="password" type="text" class="form-control">
-                    <!-- <span class="form-message"></span> -->
-                    <p>.</p>
-                </div>
-                <div class="authen__btns">
-                    <div class="btn btn--default">Đăng Kí</div>
-                </div>
-            </div>
-        </div>
-        <div class=" modal" id="my-Login">
-            <a href="#" class="overlay-close"></a>
-            <form action="" method="post">
-            <div class="authen-modal login">
-                <h3 class="authen-modal__title">Đăng Nhập</h3>
-                <div class="form-group">
-                    <label for="account" class="form-label">Địa chỉ email *</label>
-                    <br>
-                    <input id="account" name="accountlogin" type="text" class="form-control">
-                    <!-- <span class="form-message">Tài khoản không chính xác !</span> -->
-                    <a>.</a>
+                    <div class="error"><?php echo isset($ErrorMessages["form-email"]) ? $ErrorMessages["form-email"] : "" ?></div>
+                    <input id="register-email" name="form-email" type="text" class="form-control" value="<?php echo isset($oldValues['form-email']) ? htmlspecialchars($oldValues['form-email']) : ''; ?>">
+                    <div>.</div>
                     
                 </div>
                 <div class="form-group">
-                    <label for="password" class="form-label">Mật khẩu *</label>
-                    <input id="password" name="passwordlogin" type="password" class="form-control">
-                    <span class="form-message"></span>
+                    <label for="register-password" class="form-label">Mật khẩu *</label>
+
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["form-password"]) ? $ErrorMessages["form-password"] : "" ?></div>
+                    <input id="register-password" name="form-password" type="password" class="form-control" value="<?php echo isset($oldValues['form-password']) ? htmlspecialchars($oldValues['form-password']) : ''; ?>">
+                    <p>.</p>
+
                 </div>
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Nhập lại mật khẩu *</label>
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["confirm-password"]) ? $ErrorMessages["confirm-password"] : "" ?></div>
+                    <input id="confirm-password" name="confirm-password" type="password" class="form-control" value="<?php echo isset($oldValues['confirm-password']) ? htmlspecialchars($oldValues['confirm-password']) : ''; ?>">
+                    <p>.</p>
+
+                </div>
+
                 <div class="authen__btns">
-                    <div class="btn btn--default" onclick="checklogin()">Đăng Nhập</div>
-                    <input type="checkbox" class="authen-checkbox">
-                    <label class="form-label">Ghi nhớ mật khẩu</label>
+                    <button type="submit" class="btn btn--default" name="register-form">Đăng Ký</button>
                 </div>
-                <a class="authen__link">Quên mật khẩu ?</a>
-            </div>
             </form>
         </div>
+    </div>
+</div>
+
+<div class="modal" id="my-Login">
+    <a href="#" class="overlay-close"></a>
+    <form action="product.php#my-Login" method="post" name ="login-form">
+        <div class="authen-modal login">
+            <h3 class="authen-modal__title">Đăng Nhập</h3>
+            <div class="form-group">
+                <label for="login-account" class="form-label">Địa chỉ email*</label>
+                <p>.</p>
+                <div class="error"><?php echo isset($ErrorMessagesLogin["form-email-login"]) ? $ErrorMessagesLogin["form-email-login"] : "" ?></div>
+                <input id="login-account" name="form-email-login" type="text" class="form-control" value="<?php echo isset($oldValuesLogin['form-email-login']) ? htmlspecialchars($oldValuesLogin['form-email-login']) : ''; ?>">
+                <a>.</a>
+            </div>
+
+            <div class="form-group">
+                <label for="login-password" class="form-label">Mật khẩu *</label>
+                <p>.</p>
+                <div class="error"><?php echo isset($ErrorMessagesLogin["passwordlogin"]) ? $ErrorMessagesLogin["passwordlogin"] : "" ?></div>
+                <input id="login-password" name="passwordlogin" type="password" class="form-control">
+                <p>.</p>
+            </div>
+
+            <div class="authen__btns">
+                <button type="submit" class="btn btn--default" name ="login-form">Đăng Nhập</button>
+                <input type="checkbox" class="authen-checkbox">
+                <label class="form-label">Ghi nhớ mật khẩu</label>
+
+            </div>
+            
+                <a class="authen__link">Quên mật khẩu ?</a>
+
+        </div>
+    </form>
+</div>
+
         <div class="up-top" id="upTop" onclick="goToTop()">
             <i class="fas fa-chevron-up"></i>
         </div>

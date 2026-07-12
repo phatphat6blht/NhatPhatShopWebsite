@@ -1,11 +1,16 @@
-<IfModule mod_rewrite.c> 
+# <IfModule mod_rewrite.c> 
 
-    # rewrite engine settings:
-    RewriteEngine On
-    RewriteBase /
-    Options -Indexes
+#     # rewrite engine settings:
+#     RewriteEngine On
+#     RewriteBase /
+#     Options -Indexes
 
-    # rewrite rules:
-    RewriteRule . index.php [NC,L]
+#     # rewrite rules:
+#     RewriteRule . index.php [NC,L]
+   
 
-</IfModule>
+# </IfModule> 
+
+
+php_value display_errors 1
+php_flag output_buffering on

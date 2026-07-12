@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ hàng</title>
+    <title>Tin Tức</title>
     <!-- Font roboto -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -29,6 +29,23 @@
 </head>
 
 <body>
+
+<?php
+    session_start();
+?>
+
+
+<!-- include -->
+<?php include 'login.php';
+
+?>
+<?php include 'register.php';
+
+?>
+
+
+
+
     <div class="header scrolling" id="myHeader">
         <div class="grid wide">
             <div class="header__top">
@@ -49,175 +66,75 @@
                     </div>
                 </div>
                 <div class="header__account">
-                    <a href="#my-Login" class="header__account-login">Đăng Nhập</a>
-                    <a href="#my-Register" class="header__account-register">Đăng Kí</a>
+                <?php
+                        // if(!empty($_GET['act'])) {
+                        //     echo '<a href="" class="header__account-login">'.$_GET['act'].'</a>';
+                        //     echo '<a href="logOut.php" class="header__account-register">Đăng xuất</a>';
+                        //     }
+                        // else {
+                        //     echo '<a href="#my-Login" class="header__account-login">Đăng Nhập</a>';
+                        //     echo '<a href="#my-Register" class="header__account-register">Đăng Kí</a>';
+                        //     }
+
+
+                        if(!empty($_SESSION['userName'])) {
+                            echo '<a href="userAccount" class="header__account-login">'.$_SESSION['userName'].'</a>';
+                            echo '<a href="logOut.php" class="header__account-register">Đăng xuất</a>';
+                            }
+                        else {
+                            echo '<a href="#my-Login" class="header__account-login">Đăng Nhập</a>';
+                            echo '<a href="#my-Register" class="header__account-register">Đăng Kí</a>';
+                            }
+                        
+                    ?>
                 </div>
-                <!-- Cart -->
-                <div class="header__cart have" href="#">
-                    <i class="fas fa-shopping-basket"></i>
-                    <div class="header__cart-amount">
-                        3
-                    </div>
-                    <div class="header__cart-wrap">
-                        <ul class="order__list">
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/Slide1.JPG" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo sơ mi caro </a>
-                                        <div class="order-main-price"> 45,000 ₫</div>
-                                    </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/Slide2.JPG" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo khoác đen</a>
-                                        <div class="order-main-price"> 476,000 ₫</div>
-                                    </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                            <li class="item-order">
-                                <div class="order-wrap">
-                                    <a href="product.php" class="order-img">
-                                        <img src="./assets/img/product/Slide23.JPG" alt="">
-                                    </a>
-                                    <div class="order-main">
-                                        <a href="product.php" class="order-main-name">Áo phông xanh </a>
-                                        <div class="order-main-price">210,000 ₫</div>
-                                        </div>
-                                    <a href="product.php" class="order-close"><i class="far fa-times-circle"></i></a>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="total-money">Tổng cộng: 135.000đ</div>
-                        <a href="cart.php" class="btn btn--default cart-btn">Xem giỏ hàng</a>
-                        <a href="pay.php" class="btn btn--default cart-btn orange">Thanh toán</a>
-                        <!-- norcart -->
-                        <!-- <img class="header__cart-img-nocart" src="http://www.giaybinhduong.com/images/empty-cart.JPG" alt=""> -->
-                    </div>
-                </div>
+                 <!-- Cart -->
+                 <?php include 'cartMini.php'; ?>  
             </div>
         </div>
         <!-- Menu -->
-        <div class="header__nav">
-            <ul class="header__nav-list">
-                <li class="header__nav-item nav__search">
-                    <div class="nav__search-wrap">
-                        <input class="nav__search-input" type="text" name="" id="" placeholder="Tìm sản phẩm...">
-                    </div>
-                    <div class="nav__search-btn">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </li>
-                <li class="header__nav-item authen-form">
-                    <a href="#" class="header__nav-link">Tài Khoản</a>
-                    <ul class="sub-nav">
-                        <li class="sub-nav__item">
-                            <a href="#my-Login" class="sub-nav__link">Đăng Nhập</a>
-                        </li>
-                        <li class="sub-nav__item">
-                            <a href="#my-Register" class="sub-nav__link">Đăng Kí</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="header__nav-item index">
+        <?php
+include 'connect.php'; // Bao gồm tệp connect.php để kết nối cơ sở dữ liệu
+
+$sql = "SELECT * FROM DMSP"; // Truy vấn cơ sở dữ liệu để lấy danh sách sản phẩm
+$result = $conn->query($sql);
+?>
+
+<div class="header__nav">
+    <ul class="header__nav-list">
+        <!-- Các phần tử khác ở đây -->
+        
+        <li class="header__nav-item">
                     <a href="index.php" class="header__nav-link">Trang chủ</a>
                 </li>
-                <li class="header__nav-item">
-                    <a href="#" class="header__nav-link">Giới Thiệu</a>
-                </li>
-                <li class="header__nav-item">
-                    <a href="#" class="header__nav-link">Sản Phẩm</a>
-                    <div class="sub-nav-wrap grid wide">
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                        <ul class="sub-nav">
-                            <li class="sub-nav__item">
-                                <a href="" class="sub-nav__link heading">Thời trang</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Áo khoác mùa đông</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Quần bò</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Sửa rửa mặt </a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Đồng hồ đeo tay</a>
-                            </li>
-                            <li class="sub-nav__item">
-                                <a href="listProduct.php" class="sub-nav__link">Mũ thời trang</a>
-                            </li>
-                        </ul>
-                    </div>
+
+        <li class="header__nav-item">
+            <a href="#" class="header__nav-link">Sản Phẩm</a>
+            <div class="sub-nav-wrap wide dm">
+                <?php
+                $count = 0; // Biến đếm số lượng sản phẩm đã in
+                while ($row = $result->fetch_assoc()) {
+                    // In ra tối đa 5 sản phẩm mỗi lần
+                    if ($count % 3== 0) {
+                        echo '<ul class="sub-nav">';
+                    }
+                    echo '<li class="sub-nav__item">';
+                    echo '<a href="listProduct.php" class="sub-nav__link">' . $row['TenDMSP'] . '</a>';
+                    echo '</li>';
+
+                    $count++;
+
+                    // Đóng thẻ ul nếu đã in đủ 5 sản phẩm hoặc hết sản phẩm
+                    if ($count % 3 == 0 || $count == $result->num_rows) {
+                        echo '</ul>';
+                    }
+                }
+                ?>
+            </div>
+        </li>
+
+             <li class="header__nav-item">
+                    <a href="cart.php" class="header__nav-link">Giỏ hàng</a>
                 </li>
                 <li class="header__nav-item">
                     <a href="news.php" class="header__nav-link">Tin Tức</a>
@@ -225,8 +142,9 @@
                 <li class="header__nav-item">
                     <a href="contact.php" class="header__nav-link">Liên Hệ</a>
                 </li>
-            </ul>
-        </div>
+    </ul>
+</div>
+
     </div>
    
     <div class="main">
@@ -242,87 +160,63 @@
                 </div>
             </div>
             <div class="list-new">
-                <div href="#" class="new-item">
-                    <a href="#" class="new-item__img">
-                        <img src="./assets/img/news/new3.jpg" alt="">
-                    </a>
-                    <div class="new-item__body">
-                        <a href="#" class="new-item__title">
-                            Thời trang nam ở Shop Nhất Phát đang được giảm giá mạnh...
-                          
-                       </a>
-                        <p class="new-item__time"> Ngày đăng: 27/5/2020</p>
-                        <p class="new-item__description">Xu hướng thời trang nam basic có tên gọi khác là phong cách minimalism luôn hướng tới sự đơn giản những vẫn giữ được vẻ ngoài thanh lịch, trang nhã nên phong cách này có tính ứng dụng rất cao, chúng có thể sử dụng được trong nhiều hoàn cảnh khác nhau như đi học, đi làm hay đi chơi đều được. Nếu là một chàng trai đang muốn theo đuổi lối sống đơn giản không phô trương hay cơ bản là các bạn lười mix đồ thì phong cách basic này sinh ra là dành cho bạn.
+            <?php
+include 'connect.php'; // Kết nối đến cơ sở dữ liệu
 
-                    </p>
-                        <a href="#" class="btn btn--default">Xem thêm</a>
-                    </div>
-                </div>
-                <div href="#" class="new-item">
-                    <a href="#" class="new-item__img">
-                        <img src="./assets/img/news/new4.jpg" alt="">
-                    </a>
-                    <div class="new-item__body">
-                        <a href="#" class="new-item__title">
-                            Thời trang nam ở Shop Nhất Phát đang được giảm giá mạnh...
-                          
-                       </a>
-                        <p class="new-item__time"> Ngày đăng: 27/5/2020</p>
-                        <p class="new-item__description">Xu hướng thời trang nam basic có tên gọi khác là phong cách minimalism luôn hướng tới sự đơn giản những vẫn giữ được vẻ ngoài thanh lịch, trang nhã nên phong cách này có tính ứng dụng rất cao, chúng có thể sử dụng được trong nhiều hoàn cảnh khác nhau như đi học, đi làm hay đi chơi đều được. Nếu là một chàng trai đang muốn theo đuổi lối sống đơn giản không phô trương hay cơ bản là các bạn lười mix đồ thì phong cách basic này sinh ra là dành cho bạn.
+// Truy vấn dữ liệu từ bảng tin tức
+$query = "SELECT * FROM news";
+$result = mysqli_query($conn, $query);
 
-                    </p>
-                        <a href="#" class="btn btn--default">Xem thêm</a>
-                    </div>
-                </div>
-                <div href="#" class="new-item">
-                    <a href="#" class="new-item__img">
-                        <img src="./assets/img/news/new5.jpg" alt="">
-                    </a>
-                    <div class="new-item__body">
-                        <a href="#" class="new-item__title">
-                            Thời trang nam ở Shop Nhất Phát đang được giảm giá mạnh...
-                          
-                       </a>
-                        <p class="new-item__time"> Ngày đăng: 27/5/2020</p>
-                        <p class="new-item__description">Xu hướng thời trang nam basic có tên gọi khác là phong cách minimalism luôn hướng tới sự đơn giản những vẫn giữ được vẻ ngoài thanh lịch, trang nhã nên phong cách này có tính ứng dụng rất cao, chúng có thể sử dụng được trong nhiều hoàn cảnh khác nhau như đi học, đi làm hay đi chơi đều được. Nếu là một chàng trai đang muốn theo đuổi lối sống đơn giản không phô trương hay cơ bản là các bạn lười mix đồ thì phong cách basic này sinh ra là dành cho bạn.
-
-                    </p>
-                        <a href="#" class="btn btn--default">Xem thêm</a>
-                    </div>
-                </div>
-                <div href="#" class="new-item">
-                    <a href="#" class="new-item__img">
-                        <img src="./assets/img/news/new6.jpg" alt="">
-                    </a>
-                    <div class="new-item__body">
-                        <a href="#" class="new-item__title">
-                            Thời trang nam ở Shop Nhất Phát đang được giảm giá mạnh...
-                          
-                       </a>
-                        <p class="new-item__time"> Ngày đăng: 27/5/2020</p>
-                        <p class="new-item__description">Xu hướng thời trang nam basic có tên gọi khác là phong cách minimalism luôn hướng tới sự đơn giản những vẫn giữ được vẻ ngoài thanh lịch, trang nhã nên phong cách này có tính ứng dụng rất cao, chúng có thể sử dụng được trong nhiều hoàn cảnh khác nhau như đi học, đi làm hay đi chơi đều được. Nếu là một chàng trai đang muốn theo đuổi lối sống đơn giản không phô trương hay cơ bản là các bạn lười mix đồ thì phong cách basic này sinh ra là dành cho bạn.
-
-                    </p>
-                        <a href="#" class="btn btn--default">Xem thêm</a>
-                    </div>
-                </div>
-                <div href="#" class="new-item">
-                    <a href="#" class="new-item__img">
-                        <img src="./assets/img/news/TinTuc.png " alt="">
-                    </a>
-                    <div class="new-item__body">
-                        <a href="#" class="new-item__title">
-                            Thời trang nam ở Shop Nhất Phát đang được giảm giá mạnh...
-                          
-                       </a>
-                        <p class="new-item__time"> Ngày đăng: 27/5/2020</p>
-                        <p class="new-item__description">Xu hướng thời trang nam basic có tên gọi khác là phong cách minimalism luôn hướng tới sự đơn giản những vẫn giữ được vẻ ngoài thanh lịch, trang nhã nên phong cách này có tính ứng dụng rất cao, chúng có thể sử dụng được trong nhiều hoàn cảnh khác nhau như đi học, đi làm hay đi chơi đều được. Nếu là một chàng trai đang muốn theo đuổi lối sống đơn giản không phô trương hay cơ bản là các bạn lười mix đồ thì phong cách basic này sinh ra là dành cho bạn.
-
-                    </p>
-                        <a href="#" class="btn btn--default">Xem thêm</a>
-                    </div>
-                </div>
+// Kiểm tra nếu có kết quả trả về
+if (mysqli_num_rows($result) > 0) {
+    // Lặp qua các hàng kết quả và hiển thị tin tức
+    while ($row = mysqli_fetch_assoc($result)) {
+        ?>
+        <div href="#" class="new-item">
+            <a href="#" class="new-item__img">
+                <!-- Sử dụng cột id hoặc một cột nào khác để lấy hình ảnh nếu có -->
+                <img src="<?php echo $row['HinhAnh']?>" alt="">
+            </a>
+            <div class="new-item__body">
+                <a href="#" class="new-item__title">
+                    <?php echo $row['TenTinTuc']; ?>
+                </a>
+                <p class="new-item__time"> Ngày đăng: <?php echo $row['NgayDang']; ?></p>
+                <p class="new-item__description"><?php echo $row['NoiDung']; ?></p>
+                <!-- Thêm một số thông tin khác nếu cần -->
+                <a href="#" class="btn btn--default read-more">Xem thêm</a>
             </div>
+        </div>
+        <?php
+    }
+} else {
+    echo "Không có tin tức nào.";
+}
+?>
+            </div>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+    const readMoreButtons = document.querySelectorAll('.read-more');
+
+    readMoreButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const fullContent = this.parentElement.querySelector('.full-content');
+            if (fullContent.style.display === 'none') {
+                fullContent.style.display = 'block';
+                this.innerText = 'Ẩn đi';
+            } else {
+                fullContent.style.display = 'none';
+                this.innerText = 'Xem thêm';
+            }
+        });
+    });
+});
+
+            
+            </script>
+
         </div>
         <div class="footer">
             <div class="grid wide">
@@ -384,18 +278,18 @@
                                 </a>
                             </li>
                             <li class="footer__item">
-                                <div class="social-group">
-                                    <a href="#" class="social-item"><i class="fab fa-facebook-f"></i>
-                                        </a>
-                                    <a href="#" class="social-item"><i class="fab fa-twitter"></i>
-                                        </a>
-                                    <a href="#" class="social-item"><i class="fab fa-pinterest-p"></i>
-                                        </a>
-                                    <a href="#" class="social-item"><i class="fab fa-invision"></i>
-                                        </a>
-                                    <a href="#" class="social-item"><i class="fab fa-youtube"></i>  
-                                        </a>
-                                </div>
+                            <div class="social-group">
+                                <a href="https://www.facebook.com/profile.php?id=100040227180867&locale=vi_VN" class="social-item"><i class="fab fa-facebook-f"></i>
+                                    </a>
+                                <a href="https://twitter.com/LuongisDev" class="social-item"><i class="fab fa-twitter"></i>
+                                    </a>
+                                <a href="https://www.pinterest.com/21lngn/" class="social-item"><i class="fab fa-pinterest-p"></i>
+                                    </a>
+                                <a href="https://nam899186.invisionapp.com/teams/account?next=/homepage" class="social-item"><i class="fab fa-invision"></i>
+                                    </a>
+                                <a href="https://www.youtube.com/channel/UCUxxrm7ghBkuXLMLwBZXwcQ" class="social-item"><i class="fab fa-youtube"></i>  
+                                    </a>
+                            </div>
                             </li>
                         </ul>
                     </div>
@@ -421,70 +315,94 @@
                 <span class="footer__text"> &copy Bản quyền thuộc về <a class="footer__link" href="#"> Nguyễn Kế Lương</a></span>
             </div>
         </div>
-        <!-- Modal Form -->
-    <div class="ModalForm">
-        <div class="modal" id="my-Register">
-            <a href="#" class="overlay-close"></a>
-            <div class="authen-modal register">
-                <h3 class="authen-modal__title">Đăng Kí</h3>
+
+
+      
+
+
+
+<div class="ModalForm">
+    <div class="modal" id="my-Register">
+        <a href="#" class="overlay-close"></a>
+        <div class="authen-modal register">
+            <h3 class="authen-modal__title">Đăng Kí</h3>
+
+            <form action="news.php#my-Register" method="post" name="register-form">
                 <div class="form-group">
-                    <label for="account" class="form-label">Họ Tên</label>
-                    <input id="account" name="account" type="text" class="form-control">
-                    <!-- <span class="form-message">Không hợp lệ !</span> -->
+                    <label for="register-account" class="form-label">Họ Tên</label>
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["form-userName"]) ? $ErrorMessages["form-userName"] : "" ?></div>
+                    <input id="register-account" name="form-userName" type="text" class="form-control" value="<?php echo isset($oldValues['form-userName']) ? htmlspecialchars($oldValues['form-userName']) : ''; ?>">
                     <p>.</p>
                 </div>
                 <div class="form-group">
-                    <label for="account" class="form-label">Tài khoản Email *</label>
-                    <input id="account" name="account" type="text" class="form-control">
-                    <span class="form-message"></span>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="form-label">Mật khẩu *</label>
-                    <input id="password" name="password" type="password" class="form-control">
-                    <!-- <span class="form-message"></span> -->
+                    <label for="register-email" class="form-label">Tài khoản Email *</label>
                     <p>.</p>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="form-label">Nhập lại mật khẩu *</label>
-                    <input id="password" name="password" type="text" class="form-control">
-                    <!-- <span class="form-message"></span> -->
-                    <p>.</p>
-                </div>
-                <div class="authen__btns">
-                    <div class="btn btn--default">Đăng Kí</div>
-                </div>
-            </div>
-        </div>
-        <div class=" modal" id="my-Login">
-            <a href="#" class="overlay-close"></a>
-            <form action="" method="post">
-            <div class="authen-modal login">
-                <h3 class="authen-modal__title">Đăng Nhập</h3>
-                <div class="form-group">
-                    <label for="account" class="form-label">Địa chỉ email *</label>
-                    <br>
-                    <input id="account" name="accountlogin" type="text" class="form-control">
-                    <!-- <span class="form-message">Tài khoản không chính xác !</span> -->
-                    <a>.</a>
+                    <div class="error"><?php echo isset($ErrorMessages["form-email"]) ? $ErrorMessages["form-email"] : "" ?></div>
+                    <input id="register-email" name="form-email" type="text" class="form-control" value="<?php echo isset($oldValues['form-email']) ? htmlspecialchars($oldValues['form-email']) : ''; ?>">
+                    <div>.</div>
                     
                 </div>
                 <div class="form-group">
-                    <label for="password" class="form-label">Mật khẩu *</label>
-                    <input id="password" name="passwordlogin" type="password" class="form-control">
-                    <span class="form-message"></span>
+                    <label for="register-password" class="form-label">Mật khẩu *</label>
+
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["form-password"]) ? $ErrorMessages["form-password"] : "" ?></div>
+                    <input id="register-password" name="form-password" type="password" class="form-control" value="<?php echo isset($oldValues['form-password']) ? htmlspecialchars($oldValues['form-password']) : ''; ?>">
+                    <p>.</p>
+
                 </div>
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Nhập lại mật khẩu *</label>
+                    <p>.</p>
+                    <div class="error"><?php echo isset($ErrorMessages["confirm-password"]) ? $ErrorMessages["confirm-password"] : "" ?></div>
+                    <input id="confirm-password" name="confirm-password" type="password" class="form-control" value="<?php echo isset($oldValues['confirm-password']) ? htmlspecialchars($oldValues['confirm-password']) : ''; ?>">
+                    <p>.</p>
+
+                </div>
+
                 <div class="authen__btns">
-                    <div class="btn btn--default" onclick="checklogin()">Đăng Nhập</div>
-                    <input type="checkbox" class="authen-checkbox">
-                    <label class="form-label">Ghi nhớ mật khẩu</label>
+                    <button type="submit" class="btn btn--default" name="register-form">Đăng Ký</button>
                 </div>
-                <a class="authen__link">Quên mật khẩu ?</a>
-            </div>
             </form>
         </div>
-        <div class="up-top" id="upTop" onclick="goToTop()">
-            <i class="fas fa-chevron-up"></i>
-        </div>
+    </div>
+</div>
+
+<div class="modal" id="my-Login">
+    <a href="#" class="overlay-close"></a>
+    <form action="news.php#my-Login" method="post" name ="login-form">
+        <div class="authen-modal login">
+            <h3 class="authen-modal__title">Đăng Nhập</h3>
+            <div class="form-group">
+                <label for="login-account" class="form-label">Địa chỉ email*</label>
+                <p>.</p>
+                <div class="error"><?php echo isset($ErrorMessagesLogin["form-email-login"]) ? $ErrorMessagesLogin["form-email-login"] : "" ?></div>
+                <input id="login-account" name="form-email-login" type="text" class="form-control" value="<?php echo isset($oldValuesLogin['form-email-login']) ? htmlspecialchars($oldValuesLogin['form-email-login']) : ''; ?>">
+                <a>.</a>
+            </div>
+
+            <div class="form-group">
+                <label for="login-password" class="form-label">Mật khẩu *</label>
+                <p>.</p>
+                <div class="error"><?php echo isset($ErrorMessagesLogin["passwordlogin"]) ? $ErrorMessagesLogin["passwordlogin"] : "" ?></div>
+                <input id="login-password" name="passwordlogin" type="password" class="form-control">
+                <p>.</p>
+            </div>
+
+            <div class="authen__btns">
+                <button type="submit" class="btn btn--default" name ="login-form">Đăng Nhập</button>
+                <input type="checkbox" class="authen-checkbox">
+                <label class="form-label">Ghi nhớ mật khẩu</label>
+
+            <!-- </div>
+            
+                <a class="authen__link">Quên mật khẩu ?</a>
+
+        </div> -->
+    </form>
+</div>
+
         <!-- Sccipt for owl caroucel -->
 
         <!-- Script common -->

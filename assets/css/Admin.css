@@ -1,0 +1,32 @@
+
+
+
+.title{
+
+    margin-top: 30px;
+}
+
+.form_nv{
+
+    font-size: 20px;
+}
+
+table, th, td{
+    border:1px solid black;
+}
+table{
+    border-collapse:collapse;
+    font-size: 20px;
+    margin-top: 20px;
+   
+    
+}
+
+th{
+    vertical-align:middle;
+}
+
+td{
+
+    background-color: rgb(251, 251, 171);
+}
