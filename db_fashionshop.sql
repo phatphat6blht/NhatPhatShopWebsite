@@ -107,9 +107,10 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `dmsp`;
+DROP TABLE IF EXISTS `DMSP`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dmsp` (
+CREATE TABLE `DMSP` (
   `MaDMSP` varchar(300) NOT NULL,
   `TenDMSP` varchar(300) NOT NULL,
   PRIMARY KEY (`MaDMSP`)
@@ -120,10 +121,10 @@ CREATE TABLE `dmsp` (
 -- Dumping data for table `dmsp`
 --
 
-LOCK TABLES `dmsp` WRITE;
-/*!40000 ALTER TABLE `dmsp` DISABLE KEYS */;
-INSERT INTO `dmsp` VALUES ('A09','Áo thể thao nam'),('A10','Áo sơ mi nam'),('ACS02','kính râm thời trang nam'),('CS006','Vòng cổ nam'),('NS01','Đồng hồ'),('NS02','Áo khoác nam'),('NS03','Giày nam'),('NS04','Áo cộc tay '),('NS05','Quần bò nam'),('NSS02','Mũ thời trang nam'),('Q10','Quần âu nam'),('V11','Ví da nam');
-/*!40000 ALTER TABLE `dmsp` ENABLE KEYS */;
+LOCK TABLES `DMSP` WRITE;
+/*!40000 ALTER TABLE `DMSP` DISABLE KEYS */;
+INSERT INTO `DMSP` VALUES ('A09','Áo thể thao nam'),('A10','Áo sơ mi nam'),('ACS02','kính râm thời trang nam'),('CS006','Vòng cổ nam'),('NS01','Đồng hồ'),('NS02','Áo khoác nam'),('NS03','Giày nam'),('NS04','Áo cộc tay '),('NS05','Quần bò nam'),('NSS02','Mũ thời trang nam'),('Q10','Quần âu nam'),('V11','Ví da nam');
+/*!40000 ALTER TABLE `DMSP` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
